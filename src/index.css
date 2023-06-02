@@ -1,0 +1,69 @@
+body {
+  font-family: Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.Layout {
+  flex: 1;
+  display: flex;
+}
+
+main {
+  overflow-y: scroll;
+}
+
+.ant-layout-sider {
+  flex: 0 0 17rem !important;
+  max-width: 17rem !important;
+  min-width: 17rem !important;
+  width: 17rem !important;
+}
+
+.ant-layout-sider-collapsed {
+  flex: 0 0 5rem !important;
+  max-width: 5rem !important;
+  min-width: 5rem !important;
+  width: 5rem !important;
+}
+
+.logo {
+  background-color: #3b3a3a;
+  margin: 0;
+  height: 64px;
+}
+
+.sm-logo {
+  display: none;
+}
+
+.ant-layout-sider-collapsed .sm-logo {
+  display: block;
+}
+.ant-layout-sider-collapsed .lg-logo {
+  display: none;
+}
+
+.profile-img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.ant-layout-header h5 {
+  line-height: 1.5rem;
+}
+
+.ant-layout-header p {
+  line-height: 1.25rem;
+}
