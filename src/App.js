@@ -7,6 +7,8 @@ import Resetpassword from './pages/Resetpassword';
 import Forotpassword from './pages/Forgotpassword';
 import Customers from './pages/Customers';
 import Addproduct from './pages/Addproduct';
+import Productlist from './pages/Productlist';
+import UpdateProduct from './pages/UpdateProduct'; // Corrected component name
 
 function App() {
   return (
@@ -18,7 +20,11 @@ function App() {
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="customer" element={<Customers />} />
+          <Route path="customerupload/:slug" element={<Customers />} />
           <Route path="add-product" element={<Addproduct />} />
+          <Route path="product-list" element={<Productlist />} />
+          <Route path="product" element={<Addproduct />} />
+          <Route path="updateproduct/:slug" element={<UpdateProduct />} />
         </Route>
       </Routes>
     </Router>

@@ -67,3 +67,8 @@ main {
 .ant-layout-header p {
   line-height: 1.25rem;
 }
+
+.error {
+  color: red;
+  font-size: 14px;
+}

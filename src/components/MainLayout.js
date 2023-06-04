@@ -6,9 +6,11 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { VscDashboard } from 'react-icons/vsc';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 
@@ -83,16 +85,38 @@ const MainLayout = () => {
               height: 64,
             }}
           />
-          <div>
-            <div></div>
-            <div className="d-flex gap-3 align-items-center dropdown">
-              <div>
-                <img className="profile-img" src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt="" />
-              </div>
-              <div>
-                <h5 className='mb-0'>LouisJaaa</h5>
-                <p className='mb-0'>LouisJaaaaaaa@gmail.com</p>
-              </div>
+          <div className="d-flex gap-3 align-items-center dropdown">
+            <div>
+              <img className="profile-img" src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt="" />
+            </div>
+            <div
+              role="button"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <h5 className="mb-0">Navdeep</h5>
+              <p className="mb-0">navdeepdahiya753@gmail.com</p>
+            </div>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li>
+                <Link
+                  className="dropdown-item py-1 mb-1"
+                  style={{ height: "auto", lineHeight: "20px" }}
+                  to="/"
+                >
+                  View Profile
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="dropdown-item py-1 mb-1"
+                  style={{ height: "auto", lineHeight: "20px" }}
+                  to="/"
+                >
+                  Signout
+                </Link>
+              </li>
             </div>
           </div>
         </Header>
@@ -104,6 +128,16 @@ const MainLayout = () => {
             background: colorBgContainer,
           }}
         >
+          <ToastContainer
+            position="top-right"
+            autoClose={500}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light" />
           <Outlet />
         </Content>
       </Layout>

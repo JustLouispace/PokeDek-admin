@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { createProduct, resetState } from "../features/Product/productSlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
+import { toast } from 'react-toastify';
+toast.success('🦄 Wow so easy!');
+
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is Required"),
@@ -30,6 +33,16 @@ const Addproduct = () => {
 
 
   const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
+  const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+  useEffect(() => {
+    if (isSuccess && createdProduct) {
+      toast.success("Product Added Successfullly!");
+    }
+    if (isError) {
+      toast.error("Something Went Wrong!");
+    }
+})
   const img = [];
   imgState.forEach((i) => {
     img.push({

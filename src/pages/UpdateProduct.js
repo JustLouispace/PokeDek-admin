@@ -3,10 +3,13 @@ import Custominput from '../components/Custominput';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { createProduct, resetState } from "../features/Product/productSlice";
+import { useNavigate, useParams } from 'react-router-dom';
+import { createProduct, resetState, updateAProduct } from "../features/Product/productSlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
+import axios from 'axios';
+import { config } from '../utils/axiosconfig';
+
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is Required"),
@@ -21,13 +24,49 @@ const schema = yup.object().shape({
     .test("is-required", "EvolvesFrom is Required", (value) => value !== ""),
 });
 
-
-
 const Addproduct = () => {
+  const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
+  const [name, setName] = useState('');
+  const [supertype, setsupertype] = useState('');
+  const [subtypes, setsubtypes] = useState('');
+  const [hp, sethp] = useState('');
+  const [types, setTypes] = useState('');
+  const [evolvesFrom, setEvolvesFrom] = useState('');
 
+
+
+  const getSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:5000/api/PokemonCard/${params.slug}`);
+      console.log(data);
+      setName(data.name);
+      setsupertype(data.supertype);
+      setsubtypes(data.subtypes);
+      sethp(data.hp);
+      setTypes(data.types);
+      setEvolvesFrom(data.evolvesFrom);
+      setImages(data.images);
+      formik.setFieldValue('images', data.images);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSingleProduct();
+  }, []);
+
+  useEffect(() => {
+    formik.setFieldValue('name', name);
+    formik.setFieldValue('supertype', supertype);
+    formik.setFieldValue('subtypes', subtypes);
+    formik.setFieldValue('hp', hp);
+    formik.setFieldValue('types', types);
+    formik.setFieldValue('evolvesFrom', evolvesFrom);
+  }, [name, supertype, subtypes, hp, types, evolvesFrom,]);
 
   const imgState = useSelector((state) => state.upload.images);
   const img = [];
@@ -40,9 +79,19 @@ const Addproduct = () => {
   console.log(img);
 
   useEffect(() => {
-    formik.values.images = img;
-  }, [img]);
+    formik.setFieldValue('images', images);
+  }, [images]);
 
+  useEffect(() => {
+    const img = [];
+    imgState.forEach((i) => {
+      img.push({
+        public_id: i.public_id,
+        url: i.url,
+      });
+    });
+    formik.setFieldValue('images', [...formik.values.images, ...img]);
+  }, [imgState]);
 
   const formik = useFormik({
     initialValues: {
@@ -68,19 +117,36 @@ const Addproduct = () => {
         images,
       };
 
-      dispatch(createProduct(formData));
-      dispatch(resetState());
-      formik.resetForm();
-      setTimeout(() => {
-        navigate("/admin/product-list")
 
-      }, 3000);
-    },
+      if (params.slug) {
+        axios.put(`http://localhost:5000/api/PokemonCard/${params.slug}`, formData, config)
+          .then(() => {
+            // Rest of the code
+          })
+          .catch((error) => {
+            // Handle error
+          })
+          .then(() => {
+            dispatch(resetState());
+            formik.resetForm();
+            setTimeout(() => {
+              navigate("/admin/product-list");
+            }, 3000);
+          })
+          .catch((error) => {
+            console.log(error);
+            // Handle error
+          });
+
+
+      }
+    }
   });
+
 
   return (
     <div>
-      <h1 className='mb-4'>Addproduct</h1>
+      <h1 className='mb-4'>UppdataProduct</h1>
       <div>
         <form onSubmit={formik.handleSubmit} className="d-flex gap-3 flex-column">
           <Custominput
@@ -131,7 +197,7 @@ const Addproduct = () => {
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="">Select Category</option>
+            <option value="">Select Types</option>
             <option value="Grass">Grass</option>
             <option value="Lightning">Lightning</option>
             <option value="Fire">Fire</option>
@@ -183,12 +249,15 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className="showimages d-flex flex-wrap gap-3">
-            {imgState?.map((i, j) => {
+            {formik.values.images?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
                   <button
                     type="button"
-                    onClick={() => dispatch(delImg(i.public_id))}
+                    onClick={() => {
+                      const filteredImages = formik.values.images.filter((img) => img.public_id !== i.public_id);
+                      formik.setFieldValue('images', filteredImages);
+                    }}
                     className="btn-close position-absolute"
                     style={{ top: "10px", right: "10px" }}
                   ></button>
