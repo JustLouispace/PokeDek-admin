@@ -17,8 +17,7 @@ const schema = yup.object().shape({
     .string()
     .test("is-required", "Types is Required", (value) => value !== ""),
   evolvesFrom: yup
-    .string()
-    .test("is-required", "EvolvesFrom is Required", (value) => value !== ""),
+    .string().required("evolvesFrom is Required"),
 });
 
 
@@ -150,22 +149,16 @@ const Addproduct = () => {
           {formik.touched.types && formik.errors.types && (
             <div className="error">{formik.errors.types}</div>
           )}
-          <select
+          <Custominput
+            type="text"
+            label="Enter evolvesFrom"
             name="evolvesFrom"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.evolvesFrom}
-            className="form-control py-3 mb-3"
-          >
-            <option value="">Select EvolvesFrom</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-          {formik.touched.evolvesFrom && formik.errors.evolvesFrom && (
-            <div className="error">{formik.errors.evolvesFrom}</div>
-          )}
+            onCh={formik.handleChange("evolvesFrom")}
+            onBl={formik.handleBlur("evolvesFrom")}
+            val={formik.values.evolvesFrom}
+          />
+          {formik.touched.evolvesFrom && formik.errors.evolvesFrom && <div className="error">{formik.errors.evolvesFrom}</div>}
+        
           <div className="bg-white border-1 p-5 text-center">
             <Dropzone
               onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}

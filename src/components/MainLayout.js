@@ -70,6 +70,25 @@ const MainLayout = () => {
 
               ]
             },
+            {
+              key: 'request-ctrl',
+              icon: <VscDashboard className='fs-4' />,
+              label: 'Requset',
+              children: [
+                {
+                  key: 'add-Requset',
+                  icon: <VscDashboard className='fs-4' />,
+                  label: 'Add Requsett',
+                },
+                {
+                  key: 'Requset-list',
+                  icon: <VscDashboard className='fs-4' />,
+                  label: 'Requset-list',
+                },
+
+
+              ]
+            },
           ]}
         />
       </Sider>

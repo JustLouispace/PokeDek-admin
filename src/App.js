@@ -9,6 +9,9 @@ import Customers from './pages/Customers';
 import Addproduct from './pages/Addproduct';
 import Productlist from './pages/Productlist';
 import UpdateProduct from './pages/UpdateProduct'; // Corrected component name
+import Requsetlist from './pages/Requsetlist';
+import UpdateRequest from './pages/updateRequest';
+import Addrequest from './pages/Addrequest';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
           <Route path="product-list" element={<Productlist />} />
           <Route path="product" element={<Addproduct />} />
           <Route path="updateproduct/:slug" element={<UpdateProduct />} />
+          <Route path="Requset-list" element={<Requsetlist />} />
+          <Route path="add-Requset" element={<Addrequest />} />
+          <Route path="update-Request/:slug" element={<UpdateRequest />} />
         </Route>
       </Routes>
     </Router>

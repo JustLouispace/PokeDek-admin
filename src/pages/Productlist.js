@@ -58,6 +58,8 @@ const columns = [
   {
     title: "Action",
     dataIndex: "action",
+
+    
   },
 ];
 
