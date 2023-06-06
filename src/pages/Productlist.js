@@ -59,7 +59,7 @@ const columns = [
     title: "Action",
     dataIndex: "action",
 
-    
+
   },
 ];
 
@@ -79,8 +79,10 @@ const Productlist = () => {
     dispatch(getProducts());
   }, []);
 
+
   const productState = useSelector((state) => state.product.products);
-  const data = productState.map((product, index) => ({
+  const productArray = productState.data || [];
+  const data = productArray.map((product, index) => ({
     key: index + 1,
     title: product.name,
     supertype: product.supertype,

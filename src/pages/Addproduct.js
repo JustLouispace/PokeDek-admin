@@ -12,12 +12,12 @@ const schema = yup.object().shape({
   name: yup.string().required("Name is Required"),
   supertype: yup.string().required("Supertype is Required"),
   subtypes: yup.string().required("Subtypes is Required"),
-  hp: yup.string().required("Hp is Required"),
+  hp: yup.string(),
   types: yup
     .string()
     .test("is-required", "Types is Required", (value) => value !== ""),
   evolvesFrom: yup
-    .string().required("evolvesFrom is Required"),
+    .string(),
 });
 
 
@@ -158,7 +158,7 @@ const Addproduct = () => {
             val={formik.values.evolvesFrom}
           />
           {formik.touched.evolvesFrom && formik.errors.evolvesFrom && <div className="error">{formik.errors.evolvesFrom}</div>}
-        
+
           <div className="bg-white border-1 p-5 text-center">
             <Dropzone
               onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}

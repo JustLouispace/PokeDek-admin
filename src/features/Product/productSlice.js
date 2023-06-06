@@ -5,7 +5,9 @@ export const getProducts = createAsyncThunk(
     "product/get-products",
     async (thunkAPI) => {
         try {
-            return await productService.getProducts();
+            const products = await productService.getProducts();
+            console.log(products); // Check the returned data
+            return products;
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -62,7 +64,7 @@ export const deleteProduct = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-    products: [],
+    products: [], // Initialize as an empty array
     isError: false,
     isLoading: false,
     isSuccess: false,
