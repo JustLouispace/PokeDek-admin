@@ -12,7 +12,14 @@ import { useState } from 'react';
 import { VscDashboard } from 'react-icons/vsc';
 import { Link, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-
+import { AiOutlineUser } from 'react-icons/ai';
+import { RxCardStack } from "react-icons/rx";
+import { TbCards } from "react-icons/tb";
+import { CgCardSpades } from "react-icons/cg";
+import { GiCardPlay } from "react-icons/gi";
+import { FaClipboardList } from "react-icons/fa";
+import { VscRequestChanges } from "react-icons/vsc";
+import { RiFileListLine } from "react-icons/ri";
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
@@ -21,6 +28,11 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+
+  const handleSignout = () => {
+    // Clear data in local storage
+    localStorage.removeItem('user');
+  };
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -48,22 +60,22 @@ const MainLayout = () => {
             },
             {
               key: 'customer',
-              icon: <VscDashboard className='fs-4' />,
+              icon: <RxCardStack className='fs-4' />,
               label: 'Customer',
             },
             {
               key: 'product-ctrl',
-              icon: <VscDashboard className='fs-4' />,
+              icon: <TbCards className='fs-4' />,
               label: 'Product',
               children: [
                 {
                   key: 'add-product',
-                  icon: <VscDashboard className='fs-4' />,
+                  icon: <CgCardSpades className='fs-4' />,
                   label: 'Add Product',
                 },
                 {
                   key: 'product-list',
-                  icon: <VscDashboard className='fs-4' />,
+                  icon: <GiCardPlay className='fs-4' />,
                   label: 'Product-list',
                 },
 
@@ -72,17 +84,17 @@ const MainLayout = () => {
             },
             {
               key: 'request-ctrl',
-              icon: <VscDashboard className='fs-4' />,
-              label: 'Requset',
+              icon: <FaClipboardList className='fs-4' />,
+              label: 'Request',
               children: [
                 {
                   key: 'add-Requset',
-                  icon: <VscDashboard className='fs-4' />,
+                  icon: <VscRequestChanges className='fs-4' />,
                   label: 'Add Requsett',
                 },
                 {
                   key: 'Requset-list',
-                  icon: <VscDashboard className='fs-4' />,
+                  icon: <RiFileListLine className='fs-4' />,
                   label: 'Requset-list',
                 },
 
@@ -114,8 +126,8 @@ const MainLayout = () => {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <h5 className="mb-0">Navdeep</h5>
-              <p className="mb-0">navdeepdahiya753@gmail.com</p>
+              <h5 className="mb-0">Hi Admin</h5>
+              <p className="mb-0">You can click here to logout</p>
             </div>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li>
@@ -131,6 +143,7 @@ const MainLayout = () => {
                 <Link
                   className="dropdown-item py-1 mb-1"
                   style={{ height: "auto", lineHeight: "20px" }}
+                  onClick={handleSignout}
                   to="/"
                 >
                   Signout

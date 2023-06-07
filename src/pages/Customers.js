@@ -6,15 +6,22 @@ import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
 import CustomModal from "../components/CustomModal";
 import axios from "axios";
+import { BiEdit } from "react-icons/bi";
+
 
 const Customerlist = () => {
   const [open, setOpen] = useState(false);
-  const [productId, setProductId] = useState("");
+  const [usertId, setuserId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setProductId(e);
+    setuserId(e);
   };
+
   const hideModal = () => {
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
     setOpen(false);
   };
 
@@ -23,6 +30,12 @@ const Customerlist = () => {
       title: "SNo",
       dataIndex: "key",
       sorter: (a, b) => a.key - b.key,
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      sorter: (a, b) => a.role.localeCompare(b.role),
+      render: (text) => <span>{text}</span>,
     },
     {
       title: "Name",
@@ -62,9 +75,13 @@ const Customerlist = () => {
       dataIndex: "action",
       render: (_, record) => (
         <>
+          <Link to={`/admin/updatecustomer/${record.id}`} className="fs-3 text-danger">
+            <BiEdit />
+          </Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0" // Pass the product._id to showModal
-            onClick={() => showModal(record.key)} // Pass the product.key to showModal
+            onClick={() => showModal(record.id)} // Pass the user id to showModal
+
           >
             <AiFillDelete />
           </button>
@@ -81,16 +98,19 @@ const Customerlist = () => {
     const customerstate = useSelector((state) => state.customer.customers);
     const [searchedEmail, setSearchedEmail] = useState("");
     const data1 = customerstate
-      .filter((customer) => customer.role !== "admin")
       .map((customer, index) => ({
         key: index + 1,
         name: customer.Name,
         email: customer.email,
         mobile: customer.mobile,
+        role: customer.role,
+        id: customer._id,
       }));
 
     const handleDeleteCustomer = async (customerId) => {
+      setOpen(false);
       try {
+        console.log(customerId);
         const response = await axios.delete(`http://localhost:5000/api/user/${customerId}`);
         console.log(response.data);
         // Dispatch an action to remove the customer from your Redux store
@@ -119,8 +139,9 @@ const Customerlist = () => {
         <CustomModal
           hideModal={hideModal}
           open={open}
-          title="Are you sure you want to delete this Product"
-          performAction={() => handleDeleteCustomer(productId)}
+          title="Are you sure you want to delete this User"
+
+          performAction={() => handleDeleteCustomer(usertId)}
         />
       </div>
     );

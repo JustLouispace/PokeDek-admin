@@ -19,9 +19,9 @@ const schema = yup.object().shape({
     types: yup
         .string()
         .test("is-required", "Types is Required", (value) => value !== ""),
-        evolvesFrom: yup
+    evolvesFrom: yup
         .string().required("evolvesFrom is Required"),
-    });
+});
 
 const UpdateRequest = () => {
     const params = useParams();
@@ -214,22 +214,15 @@ const UpdateRequest = () => {
                     {formik.touched.types && formik.errors.types && (
                         <div className="error">{formik.errors.types}</div>
                     )}
-                    <select
+                    <Custominput
+                        type="evolvesFrom"
+                        label="Enter evolvesFrom"
                         name="evolvesFrom"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.evolvesFrom}
-                        className="form-control py-3 mb-3"
-                    >
-                        <option value="">Select EvolvesFrom</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                    {formik.touched.evolvesFrom && formik.errors.evolvesFrom && (
-                        <div className="error">{formik.errors.evolvesFrom}</div>
-                    )}
+                        onCh={formik.handleChange}
+                        onBl={formik.handleBlur}
+                        val={formik.values.evolvesFrom}
+                    />
+                    {formik.touched.evolvesFrom && formik.errors.evolvesFrom && <div className="error">{formik.errors.evolvesFrom}</div>}
                     <div className="bg-white border-1 p-5 text-center">
                         <Dropzone
                             onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
@@ -267,7 +260,7 @@ const UpdateRequest = () => {
                     <button type="submit" className="btn btn-success border-0 rounded-3 my-5">
                         Add
                     </button>
-                    
+
                 </form>
             </div>
         </div>

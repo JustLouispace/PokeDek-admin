@@ -2,13 +2,9 @@ import React from 'react'
 import Custominput from '../components/Custominput'
 import { Link } from 'react-router-dom'
 
-
 const Resetpassword = () => {
   return (
     <div className="py-5" style={{ background: "#282625", minHeight: "100vh" }} >
-      <br />
-      <br />
-      <br />
       <br />
       <br />
       <br />

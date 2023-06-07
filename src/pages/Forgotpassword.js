@@ -8,9 +8,6 @@ const Forgotpassword = () => {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
       <div className="py-5 w-25 bg-white rounded-3 mx-auto p-3">
         <h2 className="text-center title">Forgot Password</h2>
         <p className="text-center">Please Enter your Email..</p>
